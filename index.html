@@ -1,324 +1,79 @@
 <!doctype html>
 <html lang="id">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#111613">
-    <title>Rank Shop | Blockhaven</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap');
-
-        :root {
-            color-scheme: dark;
-            --ink: #eff3e8;
-            --muted: #a6afa2;
-            --base: #111613;
-            --panel: #1a211c;
-            --panel-light: #242d26;
-            --line: #354038;
-            --lime: #c3f36b;
-            --orange: #ff986a;
-            --blue: #8bd6d0;
-            --display: 'Barlow Condensed', Impact, sans-serif;
-            --body: 'DM Sans', sans-serif;
-        }
-
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            min-width: 320px;
-            background: var(--base);
-            color: var(--ink);
-            font-family: var(--body);
-            background-image: radial-gradient(#ffffff08 0.7px, transparent 0.7px);
-            background-size: 7px 7px;
-        }
-        button, input { font: inherit; }
-        button { color: inherit; }
-        a { color: inherit; text-decoration: none; }
-        .wrap { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
-
-        .topline {
-            border-bottom: 1px solid var(--line);
-            color: var(--muted);
-            font-size: 11px;
-            letter-spacing: .12em;
-            text-transform: uppercase;
-        }
-        .topline .wrap { min-height: 36px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-        .status { display: inline-flex; align-items: center; gap: 8px; color: var(--lime); }
-        .status::before { content: ''; width: 7px; height: 7px; background: var(--lime); box-shadow: 0 0 12px #c3f36b88; }
-
-        header { border-bottom: 1px solid var(--line); }
-        .nav { display: flex; align-items: center; justify-content: space-between; min-height: 76px; }
-        .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: .06em; }
-        .brand-mark { display: grid; place-items: center; width: 38px; height: 38px; background: var(--lime); color: #111613; font-size: 19px; clip-path: polygon(0 0, 75% 0, 100% 25%, 100% 100%, 25% 100%, 0 75%); }
-        .brand-name { font-family: var(--display); font-size: 23px; line-height: 1; text-transform: uppercase; }
-        .brand-name small { display: block; margin-top: 4px; color: var(--muted); font: 600 9px var(--body); letter-spacing: .2em; }
-        .nav-links { display: flex; align-items: center; gap: 28px; color: var(--muted); font-size: 13px; }
-        .nav-links a:hover { color: var(--ink); }
-        .cart-button { display: flex; align-items: center; gap: 10px; padding: 10px 13px; border: 1px solid var(--line); background: transparent; cursor: pointer; font-size: 12px; font-weight: 700; }
-        .cart-count { display: grid; place-items: center; min-width: 20px; height: 20px; padding-inline: 5px; background: var(--lime); color: var(--base); font-size: 11px; }
-
-        .hero { position: relative; overflow: hidden; padding: 70px 0 56px; border-bottom: 1px solid var(--line); }
-        .hero::after { position: absolute; right: 8%; top: 38px; content: '✦'; color: var(--lime); font-size: 18px; text-shadow: 26px 65px 0 var(--orange), -48px 105px 0 var(--blue); opacity: .8; }
-        .eyebrow { display: flex; align-items: center; gap: 10px; color: var(--lime); font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
-        .eyebrow::before { content: ''; width: 24px; height: 2px; background: currentColor; }
-        h1, h2, h3, p { margin-top: 0; }
-        h1 { max-width: 650px; margin: 16px 0 14px; font: 800 clamp(54px, 8vw, 88px)/.88 var(--display); letter-spacing: .01em; text-transform: uppercase; }
-        h1 span { color: var(--lime); }
-        .hero-copy { max-width: 480px; margin-bottom: 28px; color: var(--muted); font-size: 14px; line-height: 1.75; }
-        .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
-        .primary-link { display: inline-flex; align-items: center; gap: 16px; padding: 13px 16px; background: var(--lime); color: #111613; font-size: 12px; font-weight: 800; text-transform: uppercase; }
-        .primary-link:hover { background: #d2ff88; }
-        .hero-note { color: var(--muted); font-size: 11px; }
-
-        .server-strip { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 15px 18px; margin-top: 34px; border: 1px solid var(--line); background: #171d19; }
-        .server-label { color: var(--muted); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
-        .server-value { margin-top: 4px; font-size: 13px; font-weight: 700; }
-        .server-address { display: flex; align-items: center; gap: 12px; }
-        .copy-button { padding: 7px 9px; border: 1px solid var(--line); background: transparent; color: var(--lime); cursor: pointer; font-size: 10px; font-weight: 700; text-transform: uppercase; }
-        .copy-button:hover { border-color: var(--lime); }
-
-        .section { padding: 58px 0 72px; }
-        .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
-        .section-heading h2 { margin: 8px 0 0; font: 700 42px/.95 var(--display); text-transform: uppercase; }
-        .section-heading p { max-width: 320px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
-        .rank-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; align-items: stretch; }
-        .rank-card { position: relative; display: flex; flex-direction: column; min-height: 360px; padding: 20px; border: 1px solid var(--line); background: var(--panel); transition: transform .18s ease, border-color .18s ease; }
-        .rank-card:hover { transform: translateY(-4px); border-color: #7c8d7b; }
-        .rank-card.featured { border-color: var(--lime); background: linear-gradient(155deg, #273224, var(--panel) 54%); }
-        .ribbon { position: absolute; top: -1px; right: 16px; padding: 6px 9px; background: var(--lime); color: #111613; font-size: 9px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
-        .rank-art { display: grid; place-items: center; width: 62px; height: 62px; margin-bottom: 23px; border: 1px solid var(--line); background: #121814; font-size: 30px; image-rendering: pixelated; }
-        .rank-card:nth-child(1) .rank-art { color: var(--blue); }
-        .rank-card:nth-child(2) .rank-art { color: var(--lime); }
-        .rank-card:nth-child(3) .rank-art { color: var(--orange); }
-        .rank-card h3 { margin: 0 0 5px; font: 700 30px/.95 var(--display); text-transform: uppercase; }
-        .rank-caption { margin-bottom: 16px; color: var(--muted); font-size: 11px; }
-        .price { margin-bottom: 17px; font: 700 26px/1 var(--display); }
-        .price small { color: var(--muted); font: 500 11px var(--body); }
-        .perks { display: grid; gap: 10px; padding: 15px 0 18px; margin: 0 0 18px; border-top: 1px solid var(--line); list-style: none; color: #d5ddd1; font-size: 11px; }
-        .perks li::before { content: '+'; margin-right: 9px; color: var(--lime); font-weight: 800; }
-        .buy-button { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-top: auto; padding: 12px 13px; border: 1px solid var(--line); background: transparent; cursor: pointer; font-size: 11px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
-        .buy-button:hover, .featured .buy-button { border-color: var(--lime); background: var(--lime); color: #111613; }
-        .buy-button span { font-size: 17px; }
-
-        .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 44px; background: var(--line); border: 1px solid var(--line); }
-        .step { padding: 17px; background: var(--base); }
-        .step b { color: var(--lime); font: 700 23px var(--display); }
-        .step h3 { margin: 8px 0 5px; font-size: 12px; }
-        .step p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
-        footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
-        footer .wrap { display: flex; justify-content: space-between; gap: 14px; padding-block: 19px; }
-
-        dialog { width: min(440px, calc(100% - 28px)); padding: 0; border: 1px solid #536052; background: var(--panel); color: var(--ink); box-shadow: 0 18px 80px #000a; }
-        dialog::backdrop { background: #070a08cc; backdrop-filter: blur(3px); }
-        .dialog-head { display: flex; justify-content: space-between; align-items: center; padding: 17px 19px; border-bottom: 1px solid var(--line); }
-        .dialog-head h2 { margin: 0; font: 700 26px var(--display); text-transform: uppercase; }
-        .icon-button { width: 32px; height: 32px; border: 1px solid var(--line); background: transparent; cursor: pointer; font-size: 18px; }
-        .dialog-body { padding: 19px; }
-        .cart-list { display: grid; gap: 10px; max-height: 230px; overflow: auto; }
-        .cart-row { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--line); background: #151b17; }
-        .cart-row strong { display: block; font-size: 12px; }
-        .cart-row small { color: var(--muted); font-size: 10px; }
-        .qty { display: flex; align-items: center; gap: 8px; font-size: 12px; }
-        .qty button { width: 25px; height: 25px; border: 1px solid var(--line); background: transparent; cursor: pointer; }
-        .remove { border: 0; background: transparent; color: var(--orange); cursor: pointer; font-size: 11px; }
-        .empty { padding: 24px 8px; color: var(--muted); text-align: center; font-size: 12px; }
-        .total-row { display: flex; justify-content: space-between; padding: 17px 0; margin-top: 12px; border-top: 1px solid var(--line); font-size: 12px; }
-        .total-row strong { font-size: 17px; }
-        .field-label { display: block; margin: 4px 0 7px; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
-        .player-input { width: 100%; padding: 11px 12px; border: 1px solid var(--line); outline: 0; background: #111613; color: var(--ink); }
-        .player-input:focus { border-color: var(--lime); }
-        .checkout-button { width: 100%; margin-top: 12px; padding: 13px; border: 0; background: var(--lime); color: #111613; cursor: pointer; font-size: 11px; font-weight: 800; text-transform: uppercase; }
-        .checkout-button:disabled { opacity: .4; cursor: not-allowed; }
-        .fine-print { margin: 11px 0 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
-        .toast { position: fixed; z-index: 5; right: 20px; bottom: 20px; max-width: calc(100% - 40px); padding: 12px 15px; border: 1px solid var(--lime); background: var(--panel); color: var(--ink); font-size: 12px; opacity: 0; transform: translateY(8px); pointer-events: none; transition: .2s ease; }
-        .toast.show { opacity: 1; transform: translateY(0); }
-
-        @media (max-width: 700px) {
-            .wrap { width: min(100% - 28px, 520px); }
-            .nav { min-height: 66px; }
-            .nav-links { display: none; }
-            .hero { padding: 54px 0 38px; }
-            .hero::after { right: 8%; top: 26px; }
-            h1 { max-width: 430px; font-size: clamp(54px, 15vw, 78px); }
-            .server-strip { align-items: flex-start; }
-            .section { padding: 43px 0 52px; }
-            .section-heading { display: block; }
-            .section-heading h2 { font-size: 36px; margin-bottom: 10px; }
-            .rank-grid { grid-template-columns: 1fr; }
-            .rank-card { min-height: 0; }
-            .rank-art { margin-bottom: 16px; }
-            .steps { grid-template-columns: 1fr; margin-top: 30px; }
-            footer .wrap { flex-direction: column; }
-        }
-        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111613">
+  <title>Noise SMP Store</title>
+  <meta name="description" content="Noise SMP Store - halaman toko rank server Minecraft.">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="topline"><div class="wrap"><span>Official rank store</span><span class="status">Bedrock Edition</span></div></div>
-    <header>
-        <nav class="wrap nav" aria-label="Navigasi utama">
-            <a class="brand" href="#home" aria-label="Blockhaven, beranda"><span class="brand-mark" aria-hidden="true">B</span><span class="brand-name">Blockhaven<small>BEDROCK NETWORK</small></span></a>
-            <div class="nav-links"><a href="#ranks">Daftar rank</a><a href="#cara-beli">Cara beli</a></div>
-            <button class="cart-button" id="open-cart" type="button" aria-label="Buka keranjang">KERANJANG <span class="cart-count" id="cart-count">0</span></button>
-        </nav>
-    </header>
+  <div class="topline">
+    <div class="wrap">
+      <span>Official rank store</span>
+      <span class="status online">Server Online</span>
+    </div>
+  </div>
 
-    <main id="home">
-        <section class="hero">
-            <div class="wrap">
-                <div class="eyebrow">Toko rank server</div>
-                <h1>Main lebih jauh.<br><span>Jadi legenda.</span></h1>
-                <p class="hero-copy">Buka fitur eksklusif, pamerkan statusmu, dan dukung dunia Blockhaven terus berkembang. Pilih rank yang cocok buat petualanganmu.</p>
-                <div class="hero-actions"><a class="primary-link" href="#ranks">Lihat semua rank <span aria-hidden="true">↘</span></a><span class="hero-note">Pembelian diproses oleh admin server.</span></div>
-                <div class="server-strip" aria-label="Info server contoh">
-                    <div><div class="server-label">Nama server</div><div class="server-value">Blockhaven Network</div></div>
-                    <div><div class="server-label">Alamat Bedrock</div><div class="server-address"><span class="server-value" id="server-address">play.serverkamu.net</span><button class="copy-button" id="copy-address" type="button">Salin IP</button></div></div>
-                    <div><div class="server-label">Port</div><div class="server-value">19132</div></div>
-                </div>
-            </div>
-        </section>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a href="#home" class="brand" aria-label="Noise SMP Store home">
+        <span class="brand-mark">N</span>
+        <span class="brand-text">
+          Noise SMP
+          <small>STORE</small>
+        </span>
+      </a>
 
-        <section class="section wrap" id="ranks">
-            <div class="section-heading"><div><div class="eyebrow">Pilih kelasmu</div><h2>Rank pilihan</h2></div><p>Semua rank berlaku permanen untuk satu akun. Pastikan gamertag Bedrock kamu benar saat checkout.</p></div>
-            <div class="rank-grid">
-                <article class="rank-card">
-                    <div class="rank-art" aria-hidden="true">⛏</div><h3>Miner</h3><p class="rank-caption">Mulai petualanganmu</p><div class="price">Rp15.000 <small>/ permanen</small></div>
-                    <ul class="perks"><li>Prefix [MINER] di chat</li><li>2 set home tambahan</li><li>Kit Miner mingguan</li></ul>
-                    <button class="buy-button" type="button" data-rank="Miner"><span>Tambah ke keranjang</span><span aria-hidden="true">+</span></button>
-                </article>
-                <article class="rank-card featured">
-                    <span class="ribbon">Favorit</span><div class="rank-art" aria-hidden="true">⚔</div><h3>Knight</h3><p class="rank-caption">Siap jadi pelindung dunia</p><div class="price">Rp35.000 <small>/ permanen</small></div>
-                    <ul class="perks"><li>Semua benefit Miner</li><li>Prefix [KNIGHT] eksklusif</li><li>5 set home tambahan</li></ul>
-                    <button class="buy-button" type="button" data-rank="Knight"><span>Tambah ke keranjang</span><span aria-hidden="true">+</span></button>
-                </article>
-                <article class="rank-card">
-                    <div class="rank-art" aria-hidden="true">✦</div><h3>Warden</h3><p class="rank-caption">Puncak kekuatan server</p><div class="price">Rp75.000 <small>/ permanen</small></div>
-                    <ul class="perks"><li>Semua benefit Knight</li><li>Prefix [WARDEN] eksklusif</li><li>10 set home tambahan</li></ul>
-                    <button class="buy-button" type="button" data-rank="Warden"><span>Tambah ke keranjang</span><span aria-hidden="true">+</span></button>
-                </article>
-            </div>
+      <nav class="nav-links" id="nav-links" aria-label="Menu utama"></nav>
 
-            <div class="steps" id="cara-beli" aria-label="Cara membeli rank">
-                <div class="step"><b>01</b><h3>Pilih rank</h3><p>Tambahkan rank pilihan ke keranjang.</p></div>
-                <div class="step"><b>02</b><h3>Isi gamertag</h3><p>Masukkan nama akun Minecraft Bedrock dengan tepat.</p></div>
-                <div class="step"><b>03</b><h3>Hubungi admin</h3><p>Kirim ringkasan pesanan untuk konfirmasi pembayaran dan aktivasi.</p></div>
-            </div>
-        </section>
-    </main>
+      <button class="cart-button" id="open-cart" type="button" aria-label="Buka keranjang">
+        <span>Keranjang</span>
+        <span class="cart-count" id="cart-count">0</span>
+      </button>
+    </div>
+  </header>
 
-    <footer><div class="wrap"><span>© 2026 Blockhaven Network</span><span>Rank bersifat permanen · Minecraft Bedrock Edition</span></div></footer>
+  <main id="app"></main>
 
-    <dialog id="cart-dialog" aria-labelledby="cart-title">
-        <div class="dialog-head"><h2 id="cart-title">Keranjangmu</h2><button class="icon-button" id="close-cart" type="button" aria-label="Tutup keranjang">×</button></div>
-        <div class="dialog-body">
-            <div class="cart-list" id="cart-list"></div>
-            <div class="total-row"><span>Total</span><strong id="cart-total">Rp0</strong></div>
-            <label class="field-label" for="player-name">Gamertag Bedrock</label>
-            <input class="player-input" id="player-name" name="player-name" placeholder="Contoh: Steve123" autocomplete="nickname">
-            <button class="checkout-button" id="checkout" type="button" disabled>Kirim pesanan ke admin</button>
-            <p class="fine-print">Pesanan akan disiapkan sebagai pesan WhatsApp. Pastikan gamertag sudah benar sebelum mengirim.</p>
-        </div>
-    </dialog>
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <span>© 2026 Noise SMP Store</span>
+      <span>Rank permanen • Minecraft</span>
+    </div>
+  </footer>
 
-    <script>
-        // Ganti nomor dengan nomor WhatsApp admin, format internasional tanpa tanda +.
-        const WHATSAPP_NUMBER = '';
-        const ranks = {
-            Miner: { price: 15000 },
-            Knight: { price: 35000 },
-            Warden: { price: 75000 }
-        };
-        const cart = {};
-        const dialog = document.querySelector('#cart-dialog');
-        const cartList = document.querySelector('#cart-list');
-        const checkout = document.querySelector('#checkout');
-        const formatter = new Intl.NumberFormat('id-ID');
-        let toastTimer;
+  <dialog id="cart-dialog" aria-labelledby="cart-title">
+    <div class="dialog-head">
+      <h2 id="cart-title">Keranjangmu</h2>
+      <button class="icon-button" id="close-cart" type="button" aria-label="Tutup keranjang">×</button>
+    </div>
 
-        function showToast(message) {
-            const toast = document.querySelector('#toast');
-            toast.textContent = message;
-            toast.classList.add('show');
-            clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => toast.classList.remove('show'), 2300);
-        }
+    <div class="dialog-body">
+      <div class="cart-list" id="cart-list"></div>
 
-        function renderCart() {
-            const entries = Object.entries(cart);
-            const count = entries.reduce((sum, [, quantity]) => sum + quantity, 0);
-            const total = entries.reduce((sum, [name, quantity]) => sum + ranks[name].price * quantity, 0);
-            document.querySelector('#cart-count').textContent = count;
-            document.querySelector('#cart-total').textContent = `Rp${formatter.format(total)}`;
-            checkout.disabled = count === 0;
-            if (!entries.length) {
-                cartList.innerHTML = '<div class="empty">Keranjang masih kosong. Pilih rank untuk mulai.</div>';
-                return;
-            }
-            cartList.innerHTML = entries.map(([name, quantity]) => `
-                <div class="cart-row">
-                    <div><strong>${name}</strong><small>Rp${formatter.format(ranks[name].price)} / permanen</small></div>
-                    <div class="qty"><button type="button" data-action="minus" data-rank="${name}" aria-label="Kurangi ${name}">−</button><span>${quantity}</span><button type="button" data-action="plus" data-rank="${name}" aria-label="Tambah ${name}">+</button></div>
-                    <button class="remove" type="button" data-action="remove" data-rank="${name}">Hapus</button>
-                </div>`).join('');
-        }
+      <div class="total-row">
+        <span>Total</span>
+        <strong id="cart-total">Rp0</strong>
+      </div>
 
-        document.querySelectorAll('[data-rank]').forEach(button => {
-            if (button.dataset.action) return;
-            button.addEventListener('click', () => {
-                const name = button.dataset.rank;
-                cart[name] = (cart[name] || 0) + 1;
-                renderCart();
-                showToast(`${name} ditambahkan ke keranjang`);
-            });
-        });
+      <label class="field-label" for="player-name">Gamertag</label>
+      <input class="player-input" id="player-name" name="player-name" placeholder="Contoh: NoisePlayer" autocomplete="nickname">
 
-        cartList.addEventListener('click', event => {
-            const button = event.target.closest('[data-action]');
-            if (!button) return;
-            const { rank, action } = button.dataset;
-            if (action === 'plus') cart[rank] = (cart[rank] || 0) + 1;
-            if (action === 'minus') cart[rank] = (cart[rank] || 0) - 1;
-            if (action === 'remove' || cart[rank] <= 0) delete cart[rank];
-            renderCart();
-        });
+      <button class="checkout-button" id="checkout" type="button" disabled>
+        Kirim pesanan ke admin
+      </button>
 
-        document.querySelector('#open-cart').addEventListener('click', () => dialog.showModal());
-        document.querySelector('#close-cart').addEventListener('click', () => dialog.close());
-        dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
-        document.querySelector('#copy-address').addEventListener('click', async () => {
-            try {
-                await navigator.clipboard.writeText(`${document.querySelector('#server-address').textContent}:19132`);
-                showToast('Alamat server berhasil disalin');
-            } catch { showToast('Alamat: play.serverkamu.net · Port: 19132'); }
-        });
+      <p class="fine-print">
+        Pesanan akan dibuat sebagai pesan WhatsApp. Pastikan nama akun sudah benar.
+      </p>
+    </div>
+  </dialog>
 
-        checkout.addEventListener('click', async () => {
-            const player = document.querySelector('#player-name').value.trim();
-            if (!player) {
-                document.querySelector('#player-name').focus();
-                showToast('Isi gamertag Bedrock terlebih dahulu');
-                return;
-            }
-            const lines = Object.entries(cart).map(([name, quantity]) => `- ${name} x${quantity}: Rp${formatter.format(ranks[name].price * quantity)}`);
-            const total = Object.entries(cart).reduce((sum, [name, quantity]) => sum + ranks[name].price * quantity, 0);
-            const message = `Halo admin Blockhaven, saya ingin memesan rank:\n${lines.join('\n')}\nTotal: Rp${formatter.format(total)}\nGamertag Bedrock: ${player}`;
-            if (WHATSAPP_NUMBER) {
-                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
-            } else {
-                try {
-                    await navigator.clipboard.writeText(message);
-                    showToast('Format pesanan disalin. Atur nomor WhatsApp admin untuk checkout langsung.');
-                } catch {
-                    showToast('Atur nomor WhatsApp admin di konfigurasi halaman.');
-                }
-            }
-        });
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-        renderCart();
-    </script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
